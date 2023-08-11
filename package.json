@@ -17,7 +17,7 @@
     "microbundle": "^0.15.1",
     "vitest": "^0.34.1"
   },
-  "source": "src/cmem_helpers.js",
+  "source": "src/index.js",
   "exports": {
     "require": "./dist/cmem_helpers.cjs",
     "default": "./dist/cmem_helpers.modern.js"
