@@ -45,5 +45,5 @@ test('should be able to work with a struct', () => {
   const color = Color()
   color.a = 255
   mod.test2(color._address)
-  console.log(color._address)
+  expect(color.a).toBe(100)
 })

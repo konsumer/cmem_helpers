@@ -15,5 +15,5 @@ void test1(char* name, char* destination) {
 }
 
 void test2(Color* color) {
-	color->a = 0;
+	color->a = 100;
 }
