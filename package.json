@@ -39,5 +39,13 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/konsumer/cmem_helpers.git"
-  }
+  },
+  "files": [
+    "./dist/cmem_helpers.cjs",
+    "./dist/cmem_helpers.modern.js",
+    "./dist/cmem_helpers.umd.js",
+    "./dist/cmem_helpers.cjs.map",
+    "./dist/cmem_helpers.modern.js.map",
+    "./dist/cmem_helpers.umd.js.map"
+  ]
 }
