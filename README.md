@@ -1,11 +1,37 @@
 # cmem_helpers
 
-This provides a few simple & light helpers for working with C-memory. It should be useful for FFI, native node-modules, and browser/node wasm, and has no dependencies.
+This provides a few simple & light helpers for working with C-memory. It should be useful for FFI, native node-modules, and browser/node wasm, and has no dependencies. It should also work for other runtimes like bun, deno, or quickjs.
 
 Use it to pass and work with strings, and structs. It is very light and intended for no-emscripten host-code, or situations where you want to do your own thing, a bit.
 
 
 ## usage
+
+### installation
+
+You can add it to your project like this:
+
+```
+npm i cmem_helpers
+```
+
+And then more or require it:
+
+```js
+import memhelpers from 'cmem_helpers'
+
+// OR
+
+const memhelpers = require('cmem_helpers')
+```
+
+You can also use it on the web:
+
+```html
+<script type=module>
+import memhelpers from 'https://cdn.jsdelivr.net/npm/cmem_helpers@0.0.5/+esm'
+</script>
+```
 
 ### getting started
 
