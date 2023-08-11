@@ -29,7 +29,7 @@ You can also use it on the web:
 
 ```html
 <script type=module>
-import memhelpers from 'https://cdn.jsdelivr.net/npm/cmem_helpers@0.0.5/+esm'
+import memhelpers from 'https://cdn.jsdelivr.net/npm/cmem_helpers/+esm'
 </script>
 ```
 
