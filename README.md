@@ -1,6 +1,6 @@
 # cmem_helpers
 
-This provides a few simple & light helpers for working with C-memory. It should be useful for FFI, native node-modules, and browser/node wasm.
+This provides a few simple & light helpers for working with C-memory. It should be useful for FFI, native node-modules, and browser/node wasm, and has no dependencies.
 
 Use it to pass and work with strings, and structs. It is very light and intended for no-emscripten host-code, or situations where you want to do your own thing, a bit.
 
