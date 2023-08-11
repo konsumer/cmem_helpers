@@ -24,5 +24,13 @@
     "dev": "microbundle watch",
     "test": "vitest run --globals --reporter verbose",
     "build:wasm": "clang -Wl,--strip-all -Wl,--import-memory --target=wasm32 --no-standard-libraries -Wl,--allow-undefined -Wl,--export-all -Wl,--no-entry -o src/test.wasm src/wasm/test.c"
+  },
+  "homepage": "https://github.com/konsumer/cmem_helpers#readme",
+  "bugs": {
+    "url" : "https://github.com/konsumer/cmem_helpers/issues",
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/konsumer/cmem_helpers.git"
   }
 }
