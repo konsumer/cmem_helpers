@@ -36,7 +36,7 @@ const Color = struct({
 
 test('should be able to receive/return a string from WASM function', () => {
   const retPtr = mod.malloc(20)
-  getString(mod.test1(setString('World'), retPtr))
+  mod.test1(setString('World'), retPtr)
   const response = getString(retPtr)
   expect(response).toBe('Hello World')
 })
