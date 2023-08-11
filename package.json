@@ -1,9 +1,16 @@
 {
   "name": "cmem_helpers",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "simple & light helpers for working with C-memory",
-  "keywords": ["struct", "string", "wasm", "ffi", "napi", "wasi"],
+  "keywords": [
+    "struct",
+    "string",
+    "wasm",
+    "ffi",
+    "napi",
+    "wasi"
+  ],
   "author": "David Konsumer <konsumer@jetboystudio.com> (https://konsumer.js.org)",
   "license": "MIT",
   "devDependencies": {
@@ -27,7 +34,7 @@
   },
   "homepage": "https://github.com/konsumer/cmem_helpers#readme",
   "bugs": {
-    "url" : "https://github.com/konsumer/cmem_helpers/issues"
+    "url": "https://github.com/konsumer/cmem_helpers/issues"
   },
   "repository": {
     "type": "git",
