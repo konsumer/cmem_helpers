@@ -1,0 +1,28 @@
+{
+  "name": "cmem_helpers",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "simple & light helpers for working with C-memory",
+  "keywords": ["struct", "string", "wasm", "ffi", "napi", "wasi"],
+  "author": "David Konsumer <konsumer@jetboystudio.com> (https://konsumer.js.org)",
+  "license": "MIT",
+  "devDependencies": {
+    "microbundle": "^0.15.1",
+    "vitest": "^0.34.1"
+  },
+  "source": "src/cmem_helpers.js",
+  "exports": {
+    "require": "./dist/cmem_helpers.cjs",
+    "default": "./dist/cmem_helpers.modern.js"
+  },
+  "main": "./dist/cmem_helpers.cjs",
+  "module": "./dist/cmem_helpers.module.js",
+  "unpkg": "./dist/cmem_helpers.umd.js",
+  "scripts": {
+    "build": "microbundle",
+    "prepublishOnly": "npm run build",
+    "dev": "microbundle watch",
+    "test": "vitest run --globals --reporter verbose",
+    "build:wasm": "clang -Wl,--strip-all -Wl,--import-memory --target=wasm32 --no-standard-libraries -Wl,--allow-undefined -Wl,--export-all -Wl,--no-entry -o src/test.wasm src/wasm/test.c"
+  }
+}
