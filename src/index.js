@@ -9,7 +9,7 @@ const MAX_STRING_LEN = 1024 * 20
 const decoder = new TextDecoder()
 const encoder = new TextEncoder()
 
-export default function cmemHelpers (memoryBuffer, malloc = noMalloc) {
+export default function cmemHelpers (memoryBuffer, malloc = noMalloc, littleEndian = true) {
   function setString (value, pointer, len = 0) {
     if (!len) {
       len = value.length + 1
@@ -60,13 +60,13 @@ export default function cmemHelpers (memoryBuffer, malloc = noMalloc) {
 
         if (def[prop]) {
           const view = new DataView(memoryBuffer)
-          return view[`get${def[prop]}`](obj._address + offsets[prop], true)
+          return view[`get${def[prop]}`](obj._address + offsets[prop], littleEndian)
         }
       },
       set (obj, prop, val) {
         if (def[prop]) {
           const view = new DataView(memoryBuffer)
-          view[`set${def[prop]}`](obj._address + offsets[prop], val, true)
+          view[`set${def[prop]}`](obj._address + offsets[prop], val, littleEndian)
         }
         return true
       }
