@@ -30,7 +30,7 @@ const mod = (await WebAssembly.instantiate(wasmBytes, { env })).instance.exports
 const { struct, setString, getString } = memhelpers(mod.memory.buffer, mod.malloc)
 ```
 
-The first param is a buffer associated with the memory, and the second is optional, and it's a way to allocate bytes, and get a pointer. In this example, I exposed a function called `malloc` in my wasm, so I can allocate bytes, in the host.
+The first param is a buffer associated with the memory, and the second is optional, and it's a way to allocate bytes, and get a pointer. In this example, I exposed a function called `malloc` in my wasm, so I can allocate bytes, in the host. You can see an example in the [test wasm](src/wasm/).
 
 ### strings
 
