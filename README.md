@@ -71,7 +71,7 @@ Valid types are:
 - `Uint32`
 - `Uint8`
 
-You can define a strcut like this:
+You can define a struct like this:
 
 ```js
 const Color = struct({
