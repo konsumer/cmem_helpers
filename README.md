@@ -33,9 +33,25 @@ import memhelpers from 'https://cdn.jsdelivr.net/npm/cmem_helpers/+esm'
 </script>
 ```
 
+You can also use an [importmap](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) to make your code look the same:
+
+```html
+<script type="importmap">
+{
+  "imports": {
+    "cmem_helpers": "https://cdn.jsdelivr.net/npm/cmem_helpers/+esm"
+  }
+}
+</script>
+<script type=module>
+import memhelpers from 'cmem_helpers'
+// YOUR CODE HERE
+</script>
+```
+
 ### getting started
 
-Here is an example with WASM, in the browser:
+Here is an example with WASM, in the browser/nodejs:
 
 ```js
 import memhelpers from 'cmem_helpers'
