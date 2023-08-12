@@ -142,5 +142,9 @@ And it will allocate it for you. It will have a couple members: `_size` and `_ad
 mod.useMyColor(color._address)
 ```
 
+### planned
 
+I have a few ideas for the future:
 
+- All struct-type also as fixed-length arrays (eg `ArrayUint8`)
+- Nested struct fields as pointers (with param for bitsize) or inline
