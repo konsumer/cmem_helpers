@@ -147,4 +147,4 @@ mod.useMyColor(color._address)
 I have a few ideas for the future:
 
 - All struct-type also as fixed-length arrays (eg `ArrayUint8(10, address)`)
-- Nested struct fields as pointers (with param for bit-size to support wasm/ffi) or inline
+- Nested struct fields as pointers (with param for bit-size to support wasm/ffi) or inline-bytes
