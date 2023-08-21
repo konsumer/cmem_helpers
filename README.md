@@ -124,16 +124,17 @@ const Color = struct({
 })
 ```
 
-And now you can make `Color` objects, with an address:
+And now you can make `Color` objects, with an address, and/or intiial value:
 
 ```js
-const color = Color(address)
+const color = Color({r: 0, g: 0, b: , a: 255}, address)
 ```
 
 If you provided a `malloc` function earlier, when you set it up, you can also do this:
 
 ```js
 const color = Color()
+const color = Color({r: 0, g: 0, b: , a: 255})
 ```
 
 And it will allocate it for you. It will have a couple members: `_size` and `_address` that you can use in other things, for example to pass the pointer to a function:

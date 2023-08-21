@@ -71,7 +71,13 @@ export default function cmemHelpers (memoryBuffer, malloc = noMalloc, littleEndi
         return true
       }
     }
-    return address => new Proxy({ _address: address || malloc(size), _size: size }, handler)
+    return (initval = {}, address) => {
+      const p = new Proxy({ _address: address || malloc(size), _size: size }, handler)
+      for (const i of Object.keys(initval)) {
+        p[i] = initval[i]
+      }
+      return p
+    }
   }
 
   return { struct, setString, getString }
