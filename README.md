@@ -19,7 +19,7 @@ You can add it to your project like this:
 npm i cmem_helpers
 ```
 
-And then more or require it:
+And then import or require it:
 
 ```js
 import memhelpers from 'cmem_helpers'
