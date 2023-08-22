@@ -4,6 +4,10 @@ This provides a few simple & light helpers for working with C-memory. It should 
 
 Use it to pass and work with strings, and structs. It is very light and intended for no-emscripten host-code, or situations where you want to do your own thing, a bit.
 
+I also wrote a couple medium posts about how it works:
+
+- [structs](https://medium.com/@konsumer/c-structs-and-javascript-9012d7e0ca8a)
+- [strings](https://medium.com/@konsumer/c-strings-and-javascript-b79784bc921e)
 
 ## usage
 
