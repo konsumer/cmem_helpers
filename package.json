@@ -14,6 +14,7 @@
   "author": "David Konsumer <konsumer@jetboystudio.com> (https://konsumer.js.org)",
   "license": "MIT",
   "devDependencies": {
+    "arraybuffer-equal": "^1.0.4",
     "microbundle": "^0.15.1",
     "vitest": "^0.34.1"
   },
