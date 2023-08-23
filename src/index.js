@@ -59,20 +59,20 @@ export default function cmemHelpers (memoryBuffer, malloc = noMalloc, littleEndi
         }
 
         if (def[prop]) {
-          const view = new DataView(memoryBuffer)
+          const view = new DataView(obj._buffer)
           return view[`get${def[prop]}`](obj._address + offsets[prop], littleEndian)
         }
       },
       set (obj, prop, val) {
         if (def[prop]) {
-          const view = new DataView(memoryBuffer)
+          const view = new DataView(obj._buffer)
           view[`set${def[prop]}`](obj._address + offsets[prop], val, littleEndian)
         }
         return true
       }
     }
     return (initval = {}, address) => {
-      const p = new Proxy({ _address: address || malloc(size), _size: size }, handler)
+      const p = new Proxy({ _address: address || malloc(size), _size: size, _buffer: memoryBuffer }, handler)
       for (const i of Object.keys(initval)) {
         p[i] = initval[i]
       }
