@@ -1,7 +1,7 @@
 {
   "name": "cmem_helpers",
   "type": "module",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "simple & light helpers for working with C-memory",
   "keywords": [
     "struct",
