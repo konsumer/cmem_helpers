@@ -42,9 +42,11 @@ export default function cmemHelpers (memoryBuffer, malloc = noMalloc, littleEndi
   const struct = def => {
     const offsets = {}
     let size = 0
+    const fieldSizes = {}
     for (const k of Object.keys(def)) {
       offsets[k] = size
-      size += (parseInt(def[k].match(/(\d+)/)[0]) / 8)
+      fieldSizes[k] = parseInt(def[k].match(/(\d+)/)[0]) / 8
+      size += fieldSizes[k]
     }
 
     // it's tempting to cache these as a single DataView, but it can get out of sync
@@ -60,13 +62,13 @@ export default function cmemHelpers (memoryBuffer, malloc = noMalloc, littleEndi
 
         if (def[prop]) {
           const view = new DataView(obj._buffer)
-          return view[`get${def[prop]}`](obj._address + offsets[prop], littleEndian)
+          return view[`get${def[prop]}`]((obj._address + offsets[prop]), littleEndian)
         }
       },
       set (obj, prop, val) {
         if (def[prop]) {
           const view = new DataView(obj._buffer)
-          view[`set${def[prop]}`](obj._address + offsets[prop], val, littleEndian)
+          view[`set${def[prop]}`]((obj._address + offsets[prop]), val, littleEndian)
         }
         return true
       }
@@ -80,5 +82,38 @@ export default function cmemHelpers (memoryBuffer, malloc = noMalloc, littleEndi
     }
   }
 
-  return { struct, setString, getString }
+  const structClass = def => {
+    const offsets = {}
+    let size = 0
+    const fieldSizes = {}
+    for (const k of Object.keys(def)) {
+      offsets[k] = size
+      fieldSizes[k] = parseInt(def[k].match(/(\d+)/)[0]) / 8
+      size += fieldSizes[k]
+    }
+    const f = new Function(['malloc', 'memoryBuffer', 'littleEndian'], `return class {
+      constructor(init={}, address) {
+        this._size = ${size}
+        this._address = address || malloc(this._size)
+        this._mem = memoryBuffer
+        this._littleEndian = littleEndian
+        for (const k of Object.keys(init)) {
+          this[k] = init[k]
+        }
+      }
+${Object.keys(offsets).map(k => {
+        return `        get ${k}() {
+          const view = new DataView(this._mem)
+          return view.get${def[k]}((this._address + ${offsets[k]}), this._littleEndian)
+        }
+        set ${k}(v) {
+          const view = new DataView(this._mem)
+          view.set${def[k]}((this._address + ${offsets[k]}), v, this._littleEndian)
+        }`
+      }).join('\n')}
+    }`)
+    return f(malloc, memoryBuffer, littleEndian)
+  }
+
+  return { struct, structClass, setString, getString }
 }

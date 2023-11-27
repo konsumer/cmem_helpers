@@ -28,7 +28,7 @@ const env = {
 }
 
 const mod = (await WebAssembly.instantiate(wasmBytes, { env })).instance.exports
-const { struct, setString, getString } = memhelpers(memory.buffer, mod.malloc)
+const { struct, structClass, setString, getString } = memhelpers(memory.buffer, mod.malloc)
 
 const Color = struct({
   r: 'Uint8',
@@ -37,7 +37,20 @@ const Color = struct({
   a: 'Uint8'
 })
 
+const ColorClass = structClass({
+  r: 'Uint8',
+  g: 'Uint8',
+  b: 'Uint8',
+  a: 'Uint8'
+})
+
 const Vector3 = struct({
+  x: 'Int32',
+  y: 'Int32',
+  z: 'Int32'
+})
+
+const Vector3Class = structClass({
   x: 'Int32',
   y: 'Int32',
   z: 'Int32'
@@ -51,13 +64,12 @@ test('should be able to receive/return a string from WASM function', () => {
 })
 
 test('should be able to work with an u8 struct', () => {
-  const color = Color()
+  const color = Color({ r: 0, g: 0, b: 0, a: 0 })
   color.a = 255
-  mod.test2(color._address)
   const buf = getStructAsBytes(color)
-  const ref = new Uint8Array([0x10, 0x02, 0x02, 0x64]).buffer
+  const ref = new Uint8Array([0x00, 0x00, 0x00, 0xff]).buffer
   expect(aEq(buf, ref)).toBeTruthy()
-  expect(color.a).toBe(100)
+  expect(color.a).toBe(255)
 })
 
 test('should be able to work with an i32 struct', () => {
@@ -68,4 +80,29 @@ test('should be able to work with an i32 struct', () => {
   const buf = getStructAsBytes(v)
   const ref = new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x00, 0x00, 0x9c, 0xff, 0xff, 0xff]).buffer
   expect(aEq(ref, buf)).toBeTruthy()
+  expect(v.x).toEqual(0)
+  expect(v.y).toEqual(10)
+  expect(v.z).toEqual(-100)
+})
+
+test('should be able to work with an u8 structClass', () => {
+  const color = new ColorClass({ r: 0, g: 0, b: 0, a: 0 })
+  color.a = 255
+  const buf = getStructAsBytes(color)
+  const ref = new Uint8Array([0x00, 0x00, 0x00, 0xff]).buffer
+  expect(aEq(buf, ref)).toBeTruthy()
+  expect(color.a).toBe(255)
+})
+
+test('should be able to work with an i32 structClass', () => {
+  const v = new Vector3Class()
+  v.x = 0
+  v.y = 10
+  v.z = -100
+  const buf = getStructAsBytes(v)
+  const ref = new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x00, 0x00, 0x9c, 0xff, 0xff, 0xff]).buffer
+  expect(aEq(ref, buf)).toBeTruthy()
+  expect(v.x).toEqual(0)
+  expect(v.y).toEqual(10)
+  expect(v.z).toEqual(-100)
 })

@@ -73,7 +73,7 @@ const wasmBytes = '...'
 const mod = (await WebAssembly.instantiate(wasmBytes, { env })).instance.exports
 
 // here is the actual setup
-const { struct, setString, getString } = memhelpers(mod.memory.buffer, mod.malloc)
+const { struct, structClass, setString, getString } = memhelpers(mod.memory.buffer, mod.malloc)
 ```
 
 The first param is a buffer associated with the memory, and the second is optional, and it's a way to allocate bytes, and get a pointer. In this example, I exposed a function called `malloc` in my wasm, so I can allocate bytes, in the host. You can see an example in the [test wasm](src/wasm/).
@@ -146,6 +146,19 @@ And it will allocate it for you. It will have a couple members: `_size` and `_ad
 ```js
 mod.useMyColor(color._address)
 ```
+
+You can also use `structClass`, if you like to use them more like classes, and they will work the same:
+
+```js
+const Color = structClass({
+  r: 'Uint8',
+  g: 'Uint8',
+  b: 'Uint8',
+  a: 'Uint8'
+})
+const color = new Color()
+```
+
 
 ### planned
 
