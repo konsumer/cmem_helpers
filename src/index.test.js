@@ -9,8 +9,6 @@ const memory = new WebAssembly.Memory({
   maximum: 100
 })
 
-const getStructAsBytes = (s) => memory.buffer.slice(s._address, s._address + s._size)
-
 const env = {
   memory,
 
@@ -66,8 +64,9 @@ test('should be able to receive/return a string from WASM function', () => {
 test('should be able to work with an u8 struct', () => {
   const color = Color({ r: 0, g: 0, b: 0, a: 0 })
   color.a = 255
-  const buf = getStructAsBytes(color)
+  const buf = color._bytes
   const ref = new Uint8Array([0x00, 0x00, 0x00, 0xff]).buffer
+  console.log(buf, ref)
   expect(aEq(buf, ref)).toBeTruthy()
   expect(color.a).toBe(255)
 })
@@ -77,7 +76,7 @@ test('should be able to work with an i32 struct', () => {
   v.x = 0
   v.y = 10
   v.z = -100
-  const buf = getStructAsBytes(v)
+  const buf = v._bytes
   const ref = new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x00, 0x00, 0x9c, 0xff, 0xff, 0xff]).buffer
   expect(aEq(ref, buf)).toBeTruthy()
   expect(v.x).toEqual(0)
@@ -88,7 +87,7 @@ test('should be able to work with an i32 struct', () => {
 test('should be able to work with an u8 structClass', () => {
   const color = new ColorClass({ r: 0, g: 0, b: 0, a: 0 })
   color.a = 255
-  const buf = getStructAsBytes(color)
+  const buf = color._bytes
   const ref = new Uint8Array([0x00, 0x00, 0x00, 0xff]).buffer
   expect(aEq(buf, ref)).toBeTruthy()
   expect(color.a).toBe(255)
@@ -99,7 +98,7 @@ test('should be able to work with an i32 structClass', () => {
   v.x = 0
   v.y = 10
   v.z = -100
-  const buf = getStructAsBytes(v)
+  const buf = v._bytes
   const ref = new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x00, 0x00, 0x9c, 0xff, 0xff, 0xff]).buffer
   expect(aEq(ref, buf)).toBeTruthy()
   expect(v.x).toEqual(0)

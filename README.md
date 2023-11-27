@@ -147,6 +147,12 @@ And it will allocate it for you. It will have a couple members: `_size` and `_ad
 mod.useMyColor(color._address)
 ```
 
+You can also access the underlying bytes, if you need them:
+
+```js
+console.log(color._bytes)
+```
+
 #### structClass
 
 You can also use `structClass`, if you like to use them more like classes, and they will work the same:
@@ -166,5 +172,6 @@ const color = new Color()
 
 I have a few ideas for the future:
 
-- All struct-type also as fixed-length arrays (eg `ArrayUint8(10, address)`)
 - Nested struct fields as pointers (with param for bit-size to support wasm/ffi) or inline-bytes
+- Tool to parse C header and pull out structs, in this format
+

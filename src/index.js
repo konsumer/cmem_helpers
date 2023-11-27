@@ -62,6 +62,10 @@ export default function cmemHelpers (memoryBuffer, malloc = noMalloc, littleEndi
           return obj._size
         }
 
+        if (prop === '_bytes') {
+          return memoryBuffer.slice(obj._address, obj._address + obj._size)
+        }
+
         if (def[prop]) {
           return view[`get${def[prop]}`]((obj._address + offsets[prop]), littleEndian)
         }
@@ -100,6 +104,9 @@ export default function cmemHelpers (memoryBuffer, malloc = noMalloc, littleEndi
         for (const k of Object.keys(init)) {
           this[k] = init[k]
         }
+      }
+      get _bytes() {
+        return this._view.buffer.slice(this._address, this._address + this._size)
       }
 ${Object.keys(offsets).map(k => {
         return `        get ${k}() {
