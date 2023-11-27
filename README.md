@@ -147,6 +147,8 @@ And it will allocate it for you. It will have a couple members: `_size` and `_ad
 mod.useMyColor(color._address)
 ```
 
+#### structClass
+
 You can also use `structClass`, if you like to use them more like classes, and they will work the same:
 
 ```js
