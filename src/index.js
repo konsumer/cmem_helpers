@@ -49,6 +49,8 @@ export default function cmemHelpers (memoryBuffer, malloc = noMalloc, littleEndi
       size += fieldSizes[k]
     }
 
+    const view = new DataView(memoryBuffer)
+
     // it's tempting to cache these as a single DataView, but it can get out of sync
     const handler = {
       get (obj, prop) {
@@ -61,20 +63,18 @@ export default function cmemHelpers (memoryBuffer, malloc = noMalloc, littleEndi
         }
 
         if (def[prop]) {
-          const view = new DataView(obj._buffer)
           return view[`get${def[prop]}`]((obj._address + offsets[prop]), littleEndian)
         }
       },
       set (obj, prop, val) {
         if (def[prop]) {
-          const view = new DataView(obj._buffer)
           view[`set${def[prop]}`]((obj._address + offsets[prop]), val, littleEndian)
         }
         return true
       }
     }
     return (initval = {}, address) => {
-      const p = new Proxy({ _address: address || malloc(size), _size: size, _buffer: memoryBuffer }, handler)
+      const p = new Proxy({ _address: address || malloc(size), _size: size }, handler)
       for (const i of Object.keys(initval)) {
         p[i] = initval[i]
       }
@@ -95,7 +95,7 @@ export default function cmemHelpers (memoryBuffer, malloc = noMalloc, littleEndi
       constructor(init={}, address) {
         this._size = ${size}
         this._address = address || malloc(this._size)
-        this._mem = memoryBuffer
+        this._view = new DataView(memoryBuffer)
         this._littleEndian = littleEndian
         for (const k of Object.keys(init)) {
           this[k] = init[k]
@@ -103,12 +103,10 @@ export default function cmemHelpers (memoryBuffer, malloc = noMalloc, littleEndi
       }
 ${Object.keys(offsets).map(k => {
         return `        get ${k}() {
-          const view = new DataView(this._mem)
-          return view.get${def[k]}((this._address + ${offsets[k]}), this._littleEndian)
+          return this._view.get${def[k]}((this._address + ${offsets[k]}), this._littleEndian)
         }
         set ${k}(v) {
-          const view = new DataView(this._mem)
-          view.set${def[k]}((this._address + ${offsets[k]}), v, this._littleEndian)
+          this._view.set${def[k]}((this._address + ${offsets[k]}), v, this._littleEndian)
         }`
       }).join('\n')}
     }`)
