@@ -68,10 +68,11 @@ test('should be able to work with an u8 struct', () => {
   const ref = new Uint8Array([0x00, 0x00, 0x00, 0xff]).buffer
   console.log(buf, ref)
   expect(aEq(buf, ref)).toBeTruthy()
+  mod.test2(color._address)
   expect(color.r).toBe(0)
   expect(color.g).toBe(0)
   expect(color.b).toBe(0)
-  expect(color.a).toBe(255)
+  expect(color.a).toBe(100) // test2 just changes alpha to 100
 })
 
 test('should be able to work with an i32 struct', () => {
@@ -93,10 +94,11 @@ test('should be able to work with an u8 structClass', () => {
   const buf = color._bytes
   const ref = new Uint8Array([0x00, 0x00, 0x00, 0xff]).buffer
   expect(aEq(buf, ref)).toBeTruthy()
+  mod.test2(color._address)
   expect(color.r).toBe(0)
   expect(color.g).toBe(0)
   expect(color.b).toBe(0)
-  expect(color.a).toBe(255)
+  expect(color.a).toBe(100) // test2 just changes alpha to 100
 })
 
 test('should be able to work with an i32 structClass', () => {
