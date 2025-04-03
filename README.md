@@ -32,8 +32,8 @@ const memhelpers = require('cmem_helpers')
 You can also use it on the web:
 
 ```html
-<script type=module>
-import memhelpers from 'https://cdn.jsdelivr.net/npm/cmem_helpers/+esm'
+<script type="module">
+  import memhelpers from 'https://cdn.jsdelivr.net/npm/cmem_helpers/+esm'
 </script>
 ```
 
@@ -41,15 +41,15 @@ You can also use an [importmap](https://developer.mozilla.org/en-US/docs/Web/HTM
 
 ```html
 <script type="importmap">
-{
-  "imports": {
-    "cmem_helpers": "https://cdn.jsdelivr.net/npm/cmem_helpers/+esm"
+  {
+    "imports": {
+      "cmem_helpers": "https://cdn.jsdelivr.net/npm/cmem_helpers/+esm"
+    }
   }
-}
 </script>
-<script type=module>
-import memhelpers from 'cmem_helpers'
-// YOUR CODE HERE
+<script type="module">
+  import memhelpers from 'cmem_helpers'
+  // YOUR CODE HERE
 </script>
 ```
 
@@ -62,7 +62,7 @@ import memhelpers from 'cmem_helpers'
 
 // define this to pass functions to WASM
 const env = {
-  demo(namePtr){
+  demo(namePtr) {
     console.log(`Hello ${getString(namePtr)}!`)
   }
 }
@@ -90,15 +90,14 @@ getString(strPtr)
 getString(strPtr, 100)
 
 // set a string in memory, with length (remember the last /0 char)
-setString("Hello", address, 6)
+setString('Hello', address, 6)
 
 // set a string in memory, without length
-setString("Hello", address)
+setString('Hello', address)
 
 // get a pointer to a new string (if you setup malloc earlier)
-const ptr = setString("Hello")
+const ptr = setString('Hello')
 ```
-
 
 ### structs
 
@@ -167,11 +166,9 @@ const Color = structClass({
 const color = new Color()
 ```
 
-
 ### planned
 
 I have a few ideas for the future:
 
 - Nested struct fields as pointers (with param for bit-size to support wasm/ffi) or inline-bytes
 - Tool to parse C header and pull out structs, in this format
-

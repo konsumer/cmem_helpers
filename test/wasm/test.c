@@ -1,4 +1,3 @@
-#include "walloc.h"
 #include <string.h>
 
 typedef struct Color {
