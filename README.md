@@ -160,6 +160,6 @@ console.log(color._bytes)
 I have a few ideas for the future:
 
 - handle strings & bytes in structs
-- array types like `Uint8[100]`
+- fixed-size array types like `Uint8[100]`
 - Nested struct fields as pointers (with param for bit-size to support wasm/ffi) or inline-bytes
 - Tool to parse C header and pull out structs, in this format
