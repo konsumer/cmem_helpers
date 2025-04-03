@@ -22,18 +22,18 @@ npm i cmem_helpers
 And then import or require it:
 
 ```js
-import memhelpers from 'cmem_helpers'
+import MemoryView from 'cmem_helpers'
 
 // OR
 
-const memhelpers = require('cmem_helpers')
+const MemoryView = require('cmem_helpers')
 ```
 
 You can also use it on the web:
 
 ```html
 <script type="module">
-  import memhelpers from 'https://cdn.jsdelivr.net/npm/cmem_helpers/+esm'
+  import MemoryView from 'https://cdn.jsdelivr.net/npm/cmem_helpers/+esm'
 </script>
 ```
 
@@ -48,7 +48,7 @@ You can also use an [importmap](https://developer.mozilla.org/en-US/docs/Web/HTM
   }
 </script>
 <script type="module">
-  import memhelpers from 'cmem_helpers'
+  import MemoryView from 'cmem_helpers'
   // YOUR CODE HERE
 </script>
 ```
@@ -58,12 +58,12 @@ You can also use an [importmap](https://developer.mozilla.org/en-US/docs/Web/HTM
 Here is an example with WASM, in the browser/nodejs:
 
 ```js
-import memhelpers from 'cmem_helpers'
+import MemoryView from 'cmem_helpers'
 
 // define this to pass functions to WASM
 const env = {
   demo(namePtr) {
-    console.log(`Hello ${getString(namePtr)}!`)
+    console.log(`Hello ${mem.getString(namePtr)}!`)
   }
 }
 
@@ -72,11 +72,20 @@ const wasmBytes = '...'
 
 const mod = (await WebAssembly.instantiate(wasmBytes, { env })).instance.exports
 
-// here is the actual setup
-const { struct, structClass, setString, getString } = memhelpers(mod.memory.buffer, mod.malloc)
+// here is how you set it up
+const mem = new MemoryView(mod.memory, mod.malloc)
 ```
 
-The first param is a buffer associated with the memory, and the second is optional, and it's a way to allocate bytes, and get a pointer. In this example, I exposed a function called `malloc` in my wasm, so I can allocate bytes, in the host. You can see an example in the [test wasm](src/wasm/).
+The first param is a buffer associated with the memory, and the second is optional, and it's a way to allocate bytes, and get a pointer. The third is optional, and it's "little-endian". Since wasm uses little-endian, that is the default, but you can overide by setting it to `false`. In this example, I exposed a function called `malloc` in my wasm, so I can allocate bytes, in the host. You can see an example in the [test wasm](src/wasm/).
+
+### numbers
+
+It has all the same stuff as a [DataView](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView), for convenience:
+
+```js
+console.log(mem.getUint32(ptr))
+```
+
 
 ### strings
 
@@ -84,19 +93,13 @@ These are for basic C-style null-terminated UTF-8 strings.
 
 ```js
 // get a string from a pointer, using /0 termination (standard c-string)
-getString(strPtr)
-
-// explicitly tell it the length
-getString(strPtr, 100)
+mem.getString(strPtr)
 
 // set a string in memory, with length (remember the last /0 char)
-setString('Hello', address, 6)
-
-// set a string in memory, without length
-setString('Hello', address)
+mem.setString('Hello', strPtr)
 
 // get a pointer to a new string (if you setup malloc earlier)
-const ptr = setString('Hello')
+const ptr = mem.setString('Hello')
 ```
 
 ### structs
@@ -119,7 +122,7 @@ Valid types are:
 You can define a struct like this:
 
 ```js
-const Color = struct({
+const Color = mem.struct({
   r: 'Uint8',
   g: 'Uint8',
   b: 'Uint8',
@@ -130,14 +133,14 @@ const Color = struct({
 And now you can make `Color` objects, with an address, and/or intiial value:
 
 ```js
-const color = Color({r: 0, g: 0, b: , a: 255}, address)
+const color = new Color({r: 0, g: 0, b: , a: 255}, address)
 ```
 
 If you provided a `malloc` function earlier, when you set it up, you can also do this:
 
 ```js
-const color = Color()
-const color = Color({r: 0, g: 0, b: , a: 255})
+const color = new Color()
+const color = new Color({r: 0, g: 0, b: , a: 255})
 ```
 
 And it will allocate it for you. It will have a couple members: `_size` and `_address` that you can use in other things, for example to pass the pointer to a function:
@@ -152,23 +155,11 @@ You can also access the underlying bytes, if you need them:
 console.log(color._bytes)
 ```
 
-#### structClass
-
-You can also use `structClass`, if you like to use them more like classes, and they will work the same:
-
-```js
-const Color = structClass({
-  r: 'Uint8',
-  g: 'Uint8',
-  b: 'Uint8',
-  a: 'Uint8'
-})
-const color = new Color()
-```
-
 ### planned
 
 I have a few ideas for the future:
 
+- handle strings & bytes in structs
+- array types like `Uint8[100]`
 - Nested struct fields as pointers (with param for bit-size to support wasm/ffi) or inline-bytes
 - Tool to parse C header and pull out structs, in this format
