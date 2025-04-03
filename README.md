@@ -76,7 +76,7 @@ const mod = (await WebAssembly.instantiate(wasmBytes, { env })).instance.exports
 const mem = new MemoryView(mod.memory, mod.malloc)
 ```
 
-The first param is a buffer associated with the memory, and the second is optional, and it's a way to allocate bytes, and get a pointer. The third is optional, and it's "little-endian". Since wasm uses little-endian, that is the default, but you can overide by setting it to `false`. In this example, I exposed a function called `malloc` in my wasm, so I can allocate bytes, in the host. You can see an example in the [test wasm](src/wasm/).
+The first param is a buffer associated with the memory, and the second is optional, and it's a way to allocate bytes, and get a pointer. The third is optional, and it's "little-endian". Since wasm uses little-endian, that is the default, but you can overide by setting it to `false`. In this example, I exposed a function called `malloc` in my wasm, so I can allocate bytes, in the host. You can see an example in the [test wasm](test/wasm/).
 
 ### numbers
 
