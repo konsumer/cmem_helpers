@@ -20,7 +20,7 @@ test('Bytes', async ({ assert }) => {
   bytes[1] = 2
   bytes[2] = 3
   bytes[3] = 4
-  m.setBytes(ptr, bytes)
+  m.setBytes(bytes, ptr)
   assert.deepEqual(m.getBytes(ptr, 100), bytes)
 })
 

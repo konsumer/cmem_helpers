@@ -135,7 +135,10 @@ export default class MemoryView {
   }
 
   // set some bytes in memory
-  setBytes(ptr, value) {
+  setBytes(value, ptr) {
+    if (typeof ptr === 'undefined') {
+      ptr = this.malloc(ptr.length)
+    }
     const buffer = new Uint8Array(this.memory.buffer)
     buffer.set(value, ptr)
   }

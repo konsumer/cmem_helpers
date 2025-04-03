@@ -96,10 +96,25 @@ These are for basic C-style null-terminated UTF-8 strings.
 mem.getString(strPtr)
 
 // set a string in memory, with length (remember the last /0 char)
-mem.setString('Hello', strPtr)
+mem.setString(strPtr, 'Hello')
 
 // get a pointer to a new string (if you setup malloc earlier)
 const ptr = mem.setString('Hello')
+```
+
+### bytes
+
+Bytes work the same, but with `Uint8Array`
+
+```js
+// get 100 bytes as a Uint8Array
+mem.getBytes(strPtr, 100)
+
+// set a string in memory, with length (remember the last /0 char)
+mem.setBytes(new Uint8Array([1,2,3]), ptr)
+
+// get a pointer to a new string (if you setup malloc earlier)
+const ptr = mem.setBytes(new Uint8Array([1,2,3]))
 ```
 
 ### structs
