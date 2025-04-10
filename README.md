@@ -110,10 +110,10 @@ Bytes work the same, but with `Uint8Array`
 // get 100 bytes as a Uint8Array
 mem.getBytes(strPtr, 100)
 
-// set a string in memory, with length (remember the last /0 char)
+// set some bytes in memory
 mem.setBytes(new Uint8Array([1,2,3]), ptr)
 
-// get a pointer to a new string (if you setup malloc earlier)
+// get a pointer to a new bytes (if you setup malloc earlier)
 const ptr = mem.setBytes(new Uint8Array([1,2,3]))
 ```
 
