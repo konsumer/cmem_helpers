@@ -16,24 +16,24 @@ I also wrote a couple medium posts about how it works:
 You can add it to your project like this:
 
 ```
-npm i cmem_helpers
+npm i @easywasm/memory
 ```
 
 And then import or require it:
 
 ```js
-import MemoryView from 'cmem_helpers'
+import MemoryView from '@easywasm/memory'
 
 // OR
 
-const MemoryView = require('cmem_helpers')
+const MemoryView = require('@easywasm/memory')
 ```
 
 You can also use it on the web:
 
 ```html
 <script type="module">
-  import MemoryView from 'https://cdn.jsdelivr.net/npm/cmem_helpers/+esm'
+  import MemoryView from 'https://esm.run/@easywasm/memory'
 </script>
 ```
 
@@ -43,13 +43,13 @@ You can also use an [importmap](https://developer.mozilla.org/en-US/docs/Web/HTM
 <script type="importmap">
   {
     "imports": {
-      "cmem_helpers": "https://cdn.jsdelivr.net/npm/cmem_helpers/+esm"
+      "@easywasm/memory": "https://esm.run/@easywasm/memory"
     }
   }
 </script>
 <script type="module">
-  import MemoryView from 'cmem_helpers'
-  // YOUR CODE HERE
+  import MemoryView from '@easywasm/memory'
+  // YOUR CODE @easywasm/memory
 </script>
 ```
 
@@ -58,7 +58,7 @@ You can also use an [importmap](https://developer.mozilla.org/en-US/docs/Web/HTM
 Here is an example with WASM, in the browser/nodejs:
 
 ```js
-import MemoryView from 'cmem_helpers'
+import MemoryView from '@easywasm/memory'
 
 // define this to pass functions to WASM
 const env = {
