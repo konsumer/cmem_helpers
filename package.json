@@ -1,7 +1,7 @@
 {
-  "name": "cmem_helpers",
+  "name": "@easywasm/memory",
   "type": "module",
-  "version": "1.0.1",
+  "version": "0.0.0",
   "description": "simple & light helpers for working with C-memory",
   "keywords": [
     "struct",
