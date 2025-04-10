@@ -1,4 +1,4 @@
-# cmem_helpers
+# @easywasm/memory
 
 This provides a few simple & light helpers for working with C-memory. It should be useful for FFI, native node-modules, and browser/node wasm, and has no dependencies. It should also work for other runtimes like bun, deno, or quickjs.
 
