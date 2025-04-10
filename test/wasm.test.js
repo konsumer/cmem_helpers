@@ -3,17 +3,17 @@
 import { test } from 'node:test'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
-import WasiPreview1 from 'easywasi'
+import WasiPreview1 from '@easywasm/wasi'
 
 import MemoryView from '../src/index.js'
 
 // I sue external memory here, since that is how the wasi is setup
 const memory = new WebAssembly.Memory({ initial: 1024, maximum: 1024 })
 
-// I wanted to use WASI, so I need a bit of setup
 const mod = await WebAssembly.compile(await readFile(path.join(import.meta.dirname, 'test.wasm')))
 const wasi_snapshot_preview1 = new WasiPreview1()
 wasi_snapshot_preview1.fd_fdstat_set_rights = () => {}
+
 const i = await WebAssembly.instantiate(mod, {
   env: { memory },
   wasi_snapshot_preview1

@@ -44,6 +44,6 @@
     "./dist/cmem_helpers.umd.js.map"
   ],
   "devDependencies": {
-    "easywasi": "^0.0.6"
+    "@easywasm/wasi": "^0.0.8"
   }
 }
