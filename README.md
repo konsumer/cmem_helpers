@@ -95,7 +95,7 @@ These are for basic C-style null-terminated UTF-8 strings.
 // get a string from a pointer, using /0 termination (standard c-string)
 mem.getString(strPtr)
 
-// set a string in memory, with length (remember the last /0 char)
+// set a string in memory
 mem.setString(strPtr, 'Hello')
 
 // get a pointer to a new string (if you setup malloc earlier)
